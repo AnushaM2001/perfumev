@@ -180,7 +180,19 @@ import os
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
 
+AWS_ACCESS_KEY_ID = 'AKIAYVM35QIYGSAYE6GU'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'perfumevalleybucket'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERIFY = True
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 
+# Static & Media
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # Ensure you have 'django.contrib.staticfiles' in INSTALLED_APPS
 
@@ -192,7 +204,8 @@ LOGIN_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+RAZORPAY_KEY_ID='rzp_test_4n1nOY0K5q7P3g'
+RAZORPAY_SECRET='aA5yciXqziLqd5OdPd0MyOHZ'
 
 # settings.py
 APPEND_SLASH = False
