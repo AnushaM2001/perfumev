@@ -166,19 +166,28 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-
+import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# URL to access static files
 STATIC_URL = '/static/'
 
-import os
+# During development, where Django looks for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Where collectstatic gathers all static files for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
+
 
 AWS_ACCESS_KEY_ID = 'AKIAYVM35QIYGSAYE6GU'
 AWS_SECRET_ACCESS_KEY = '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'
