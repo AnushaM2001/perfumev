@@ -70,6 +70,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- Add this here
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,7 +79,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'user_panel.middleware.BlockedUserMiddleware',  
 ]
-
+WHITENOISE_USE_FINDERS = True  # To find static files from STATICFILES_DIRS in dev
+WHITENOISE_MAX_AGE = 31536000
 ROOT_URLCONF = 'PerfumeValley.urls'
 import os
 
