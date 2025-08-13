@@ -79,10 +79,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'user_panel.middleware.BlockedUserMiddleware',  
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 WHITENOISE_USE_FINDERS = True  # To find static files from STATICFILES_DIRS in dev
 WHITENOISE_MAX_AGE = 31536000
 ROOT_URLCONF = 'PerfumeValley.urls'
-import os
 
 TEMPLATES = [
     {
