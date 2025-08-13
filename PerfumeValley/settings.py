@@ -13,8 +13,8 @@ import os
 from pathlib import Path
 from decouple import config
 
-SHIPROCKET_EMAIL = config("SHIPROCKET_EMAIL")
-SHIPROCKET_PASSWORD = config("SHIPROCKET_PASSWORD")
+SHIPROCKET_EMAIL='anu525495@gmail.com'
+SHIPROCKET_PASSWORD='tiYTExSq1C9o$EJ@'
 # Celery Settings
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
