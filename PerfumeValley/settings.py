@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config
+
 
 SHIPROCKET_EMAIL='anu525495@gmail.com'
 SHIPROCKET_PASSWORD='tiYTExSq1C9o$EJ@'
@@ -113,10 +113,11 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],  # Redis server address
+            "hosts": [("perfume_redis", 6379)],  # Redis container name
         },
     },
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -190,30 +191,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+# settings.py
 
-
-AWS_ACCESS_KEY_ID = 'AKIAYVM35QIYGSAYE6GU'
-AWS_SECRET_ACCESS_KEY = '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'
+# S3 Storage settings
 AWS_STORAGE_BUCKET_NAME = 'perfumevalleybucket'
-AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  None
+AWS_DEFAULT_ACL = None
 AWS_S3_VERIFY = True
+
+# Build the custom domain URL for media
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
-
-# Static & Media
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-# Ensure you have 'django.contrib.staticfiles' in INSTALLED_APPS
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+# Tell Django to use S3 for media files
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 LOGIN_URL = '/login/'
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 RAZORPAY_KEY_ID='rzp_test_4n1nOY0K5q7P3g'
