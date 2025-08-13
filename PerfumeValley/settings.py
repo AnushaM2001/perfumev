@@ -217,21 +217,21 @@ RAZORPAY_SECRET='aA5yciXqziLqd5OdPd0MyOHZ'
 # settings.py
 APPEND_SLASH = False
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'mail.dreamdevtechs.com'  
-# EMAIL_PORT = 465  
-# EMAIL_USE_TLS = False  
-# EMAIL_USE_SSL = True  
-# EMAIL_HOST_USER = 'tripvthme@dreamdevtechs.com' 
-# EMAIL_HOST_PASSWORD = 'hhyo kfth syst muyn' 
-# DEFAULT_FROM_EMAIL = 'tripvthme@dreamdevtechs.com'  
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'MAADAVASANTHA@gmail.com'
-EMAIL_HOST_PASSWORD = 'hhyo kfth syst muyn'
+EMAIL_HOST = 'mail.dreamdevtechs.com'  
+EMAIL_PORT = 465  
+EMAIL_USE_TLS = False  
+EMAIL_USE_SSL = True  
+EMAIL_HOST_USER = 'tripvthme@dreamdevtechs.com' 
+EMAIL_HOST_PASSWORD = 'Devesh@2025' 
+DEFAULT_FROM_EMAIL = 'tripvthme@dreamdevtechs.com'  
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'MAADAVASANTHA@gmail.com'
+# EMAIL_HOST_PASSWORD = 'hhyo kfth syst muyn'
 
 
 
