@@ -16,7 +16,7 @@ from pathlib import Path
 SHIPROCKET_EMAIL='anu525495@gmail.com'
 SHIPROCKET_PASSWORD='tiYTExSq1C9o$EJ@'
 # Celery Settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://perfume_redis:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_IMPORTS = ('admin_panel.tasks', 'user_panel.tasks')
@@ -236,6 +236,6 @@ DEFAULT_FROM_EMAIL = 'tripvthme@dreamdevtechs.com'
 
 
 # Redis Settings
-REDIS_HOST = '127.0.0.1'
+REDIS_HOST = 'perfume_redis'
 REDIS_PORT = 6379
 REDIS_DB = 0
