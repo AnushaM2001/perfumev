@@ -1063,7 +1063,7 @@
 
     @media (max-width: 576px) {
         .product-card {
-            width: 65vw;
+            width: 55vw;
             margin: 16px auto;
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -1321,6 +1321,149 @@
         font-weight: 600;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
     }
+
+/* 1. Prevent entire page horizontal overflow */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Carousel Base Styles */
+#pvHeroCarousel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Image Scaling */
+#pvHeroCarousel .carousel-item img {
+  width: 100%;
+  height: 500px;
+  object-fit: fill;
+  object-position: center;
+ 
+}
+
+/* Carousel Inner Container */
+#pvHeroCarousel .carousel-inner {
+  display: flex;
+  transition: transform 1.2s ease-in-out; /* smooth sliding */
+}
+
+#pvHeroCarousel .carousel-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  transition: transform 1.2s ease-in-out;
+}
+
+
+/* Fade Transition */
+#pvHeroCarousel.carousel-fade .carousel-item {
+  opacity: 0;
+  transform: scale(1.02); /* subtle zoom */
+  transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+}
+
+#pvHeroCarousel.carousel-fade .carousel-item.active {
+  opacity: 1;
+  transform: scale(1); /* smooth zoom-out on active */
+}
+
+
+/* Progress Bar Indicators */
+#pvHeroCarousel .carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 3;
+  padding: 0;
+}
+
+#pvHeroCarousel .carousel-indicators button {
+  width: 60px;
+  height: 2px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+}
+
+#pvHeroCarousel .carousel-indicators .progress-track {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  position: relative;
+  border-radius: 2px;
+}
+
+#pvHeroCarousel .carousel-indicators .progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: #fff;
+  will-change: width; /* Optimize for animation */
+}
+
+#pvHeroCarousel .carousel-indicators button.active .progress-fill {
+  width: 100%;
+  transition: width linear;
+}
+
+/* Clickable Areas */
+#pvHeroCarousel .carousel-item a {
+  display: block;
+  height: 100%;
+  position: relative;
+}
+
+/* Navigation Controls */
+#pvHeroCarousel .carousel-control-prev,
+#pvHeroCarousel .carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+  #pvHeroCarousel .carousel-item img,
+  #pvHeroCarousel .carousel-inner { height: 400px; }
+}
+
+@media (max-width: 768px) {
+  #pvHeroCarousel .carousel-item img,
+  #pvHeroCarousel .carousel-inner { height: 300px; }
+  #pvHeroCarousel .carousel-indicators button { width: 40px; }
+}
+
+@media (max-width: 576px) {
+  #pvHeroCarousel .carousel-item img,
+  #pvHeroCarousel .carousel-inner { height: 220px; }
+  #pvHeroCarousel .carousel-indicators { bottom: 10px; }
+  #pvHeroCarousel .carousel-indicators button { width: 30px; height: 2px; }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  display: none !important;
+}
+
+
 </style>
 <style>
     .blur-image {
@@ -1347,8 +1490,8 @@
 {% endblock extra_css %}
 
 {% block content %}
-{% if festival_offer %}
-<!-- Festival Offer Modal -->
+<!-- {% if festival_offer %}
+Festival Offer Modal
 <div class="modal fade" id="festivalOfferModal" tabindex="-1" aria-labelledby="festivalOfferLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-4 text-white text-center"
@@ -1371,9 +1514,9 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<style>
+<!-- <style>
     @keyframes slideDown {
         0% {
             transform: translateY(-100%) scale(0.9);
@@ -1413,71 +1556,276 @@
         modal.show();
     });
 </script>
-{% endif %}
+{% endif %} -->
 
 
 
-<!-- Carousel -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
-    data-bs-wrap="true">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        {% for banner in banners %}
-        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
-            class="{% if forloop.first %}active{% endif %}"></li>
-        {% endfor %}
-    </ol>
+<div id="pvHeroCarousel" class="carousel slide carousel-fade">
+  <!-- Indicators with Progress Bars -->
+  <div class="carousel-indicators">
+    {% for banner in banners %}
+    <button type="button" 
+            data-bs-target="#pvHeroCarousel" 
+            data-bs-slide-to="{{ forloop.counter0 }}"
+            class="{% if forloop.first %}active{% endif %}"
+            aria-label="Slide {{ forloop.counter }}">
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+    </button>
+    {% endfor %}
+  </div>
 
-    <!-- Carousel Items -->
-    <div class="carousel-inner">
-        {% if first_banner_no_section %}
-        <div class="carousel-item active">
-            <img src="{{ first_banner_no_section.banner_image.url }}" class="d-block w-100"
-                alt="{{ first_banner_no_section.title }}">
-        </div>
-        {% endif %}
-
-        {% for banner in other_banners %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            {% if banner.section %}
-            <a href="{% url 'viewall_products' banner.section %}"><img src="{{ banner.banner_image.url }}"
-                    class="d-block w-100" alt="Slide {{ forloop.counter }}"></a>
-            {% else %}
-            <img src="{{ banner.banner_image.url }}" class="d-block w-100" alt="{{ banner.title }}">
-            {% endif %}
-            <div class="content-overlay">
-                <div class="content-wrapper">
-                    <div class="title"></div>
-                    <div class="main-heading-wrapper">
-                        <div class="main-heading"></div>
-                        <div class="svg-icon">
-                            <svg width="19" height="20" viewBox="0 0 19 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <!-- SVG Path -->
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="subtext"></div>
-                    <br>
-                    <!-- <div class="view-collection-btn m-2 d-inline-flex align-items-center gap-2">
-                    <div class="ms-3">View Collection</div>
-                    <div class="circle-icon">
-                      <img src="{% static 'images2/Vector (1).png' %}"  style="width: 15px; height: 15px; max-width: 75%; height: auto;" alt="Slide 1">
-                    </div>
-                  </div> -->
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+  <!-- Carousel Items -->
+  <div class="carousel-inner">
+    {% if first_banner_no_section %}
+    <div class="carousel-item active">
+      <a {% if first_banner_no_section.section %}href="{% url 'viewall_products' first_banner_no_section.section %}"{% endif %} class="d-block w-100 h-100">
+        <img src="{{ first_banner_no_section.banner_image.url }}" class="d-block w-100" alt="{{ first_banner_no_section.title }}">
+      </a>
     </div>
+    {% endif %}
 
-    <!-- Controls (hidden) -->
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"
-        style="display: none;"></a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"
-        style="display: none;"></a>
+    {% for banner in other_banners %}
+    <div class="carousel-item {% if not first_banner_no_section and forloop.first %}active{% endif %}">
+      <a {% if banner.section %}href="{% url 'viewall_products' banner.section %}"{% endif %} class="d-block w-100 h-100">
+        <img src="{{ banner.banner_image.url }}" class="d-block w-100" alt="{{ banner.title }}">
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Navigation Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#pvHeroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#pvHeroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
+
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+  // 1. CAROUSEL WITH PROGRESS BARS
+  const initCarouselWithProgress = () => {
+    const carouselEl = document.getElementById('pvHeroCarousel');
+    if (!carouselEl) return;
+
+    // Configuration
+    const SLIDE_DURATION = 5000; // 5 seconds per slide
+    const buttons = Array.from(carouselEl.querySelectorAll('.carousel-indicators button'));
+    if (!buttons.length) return;
+    
+    let currentIndex = 0;
+    let animationId = null;
+    let startTimestamp = null;
+    let isPaused = false;
+    let pausedProgress = 0;
+
+    // Initialize Bootstrap Carousel
+    const carousel = new bootstrap.Carousel(carouselEl, {
+      interval: false,
+      ride: false
+    });
+
+    // High-precision animation using requestAnimationFrame
+    const animateProgress = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      
+      const elapsed = timestamp - startTimestamp;
+      const progress = Math.min(elapsed / SLIDE_DURATION, 1);
+      
+      const activeButton = buttons[currentIndex];
+      if (activeButton) {
+        const progressFill = activeButton.querySelector('.progress-fill');
+        if (progressFill) {
+          progressFill.style.width = `${progress * 100}%`;
+        }
+      }
+      
+      if (progress < 1) {
+        animationId = requestAnimationFrame(animateProgress);
+      } else {
+        advanceToNextSlide();
+      }
+    };
+
+    // Navigation functions
+    const advanceToNextSlide = () => {
+      cancelAnimation();
+      currentIndex = (currentIndex + 1) % buttons.length;
+      carousel.to(currentIndex);
+    };
+
+    const resetProgressBars = () => {
+      buttons.forEach(button => {
+        const progressFill = button.querySelector('.progress-fill');
+        if (progressFill) {
+          progressFill.style.transition = 'none';
+          progressFill.style.width = '0';
+        }
+      });
+    };
+
+    const startProgressAnimation = () => {
+      resetProgressBars();
+      updateActiveIndicator();
+      startTimestamp = null;
+      animationId = requestAnimationFrame(animateProgress);
+    };
+
+    const updateActiveIndicator = () => {
+      buttons.forEach((button, index) => {
+        button.classList.toggle('active', index === currentIndex);
+      });
+    };
+
+    const cancelAnimation = () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    };
+
+    // Pause/resume functionality
+    const pauseSlideshow = () => {
+      if (isPaused) return;
+      isPaused = true;
+      cancelAnimation();
+      
+      const activeButton = buttons[currentIndex];
+      if (activeButton) {
+        const progressFill = activeButton.querySelector('.progress-fill');
+        if (progressFill) {
+          pausedProgress = parseFloat(progressFill.style.width || '0');
+          progressFill.style.transition = 'none';
+        }
+      }
+    };
+
+    const resumeSlideshow = () => {
+      if (!isPaused) return;
+      isPaused = false;
+      
+      const activeButton = buttons[currentIndex];
+      if (activeButton) {
+        const progressFill = activeButton.querySelector('.progress-fill');
+        if (progressFill) {
+          const remainingTime = SLIDE_DURATION * (1 - pausedProgress / 100);
+          
+          progressFill.style.transition = `width ${remainingTime}ms linear`;
+          progressFill.style.width = '100%';
+          
+          setTimeout(() => {
+            if (!isPaused) {
+              advanceToNextSlide();
+            }
+          }, remainingTime);
+        }
+      }
+    };
+
+    // Event listeners
+    carouselEl.addEventListener('slid.bs.carousel', (e) => {
+      currentIndex = e.to;
+      startProgressAnimation();
+    });
+
+    carouselEl.addEventListener('mouseenter', pauseSlideshow);
+    carouselEl.addEventListener('mouseleave', resumeSlideshow);
+
+    // Manual navigation
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        if (index !== currentIndex) {
+          cancelAnimation();
+          currentIndex = index;
+          carousel.to(currentIndex);
+        }
+      });
+    });
+
+    // Initialize
+    startProgressAnimation();
+
+    // Cleanup
+    window.addEventListener('beforeunload', cancelAnimation);
+  };
+
+  // 2. SCROLLING CAROUSEL (for videoScrollRow)
+  const initScrollingCarousel = () => {
+    const row = document.getElementById('videoScrollRow');
+    if (!row) return;
+
+    const cards = row.querySelectorAll('.video-card');
+    if (!cards.length) return;
+
+    // Wait for layout to complete
+    setTimeout(() => {
+      const cardWidth = cards[0].offsetWidth + 24; // card width + gap
+      let visibleCount = Math.max(1, Math.floor(row.parentElement.offsetWidth / cardWidth));
+      let currentIndex = 0;
+      let scrollInterval = null;
+
+      const updateVisibleCount = () => {
+        visibleCount = Math.max(1, Math.floor(row.parentElement.offsetWidth / cardWidth));
+      };
+
+      const scrollToNext = () => {
+        currentIndex = (currentIndex + 1) % (cards.length - visibleCount + 1);
+        row.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        row.style.transition = 'transform 0.5s ease';
+      };
+
+      const startAutoScroll = () => {
+        scrollInterval = setInterval(scrollToNext, 3000);
+      };
+
+      const pauseAutoScroll = () => {
+        clearInterval(scrollInterval);
+      };
+
+      // Initialize
+      updateVisibleCount();
+      startAutoScroll();
+
+      // Handle resize
+      const resizeHandler = () => {
+        updateVisibleCount();
+        row.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+      };
+
+      // Event listeners
+      row.parentElement.addEventListener('mouseenter', pauseAutoScroll);
+      row.parentElement.addEventListener('mouseleave', startAutoScroll);
+      window.addEventListener('resize', resizeHandler);
+
+      // Cleanup
+      return () => {
+        clearInterval(scrollInterval);
+        window.removeEventListener('resize', resizeHandler);
+      };
+    }, 100);
+  };
+
+  // Initialize both carousels
+  initCarouselWithProgress();
+  initScrollingCarousel();
+
+  // 3. CLICKABLE BANNERS
+  document.querySelectorAll('#pvHeroCarousel .carousel-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const url = this.getAttribute('data-href');
+      if (url) {
+        window.location.href = url;
+      }
+    });
+  });
+});
+</script>
 
 
 <!-- scroll -->
@@ -1623,12 +1971,11 @@
     <div class="product-img-container {% if product.stock_status == 'outofstock' %}blur-image{% endif %}">
         {% if product.image1 and product.image2 %}
         <img src="{{ product.image1.url }}"
-             class="product-img img-fluid"
+             class="product-img "
              alt="{{ product.name }}"
              loading="lazy"
-             height="250"
-             width="250"
-             style="object-fit:cover;"
+            
+             style="object-fit:fill;"
              {% if product.stock_status != 'outofstock' %}
              onmouseover="this.src='{{ product.image2.url }}'"
              onmouseout="this.src='{{ product.image1.url }}'"
@@ -1723,12 +2070,11 @@
     <div class="product-img-container {% if i.stock_status == 'outofstock' %}blur-image{% endif %}">
         {% if i.image1 and i.image2 %}
         <img src="{{ i.image1.url }}"
-             class="product-img img-fluid"
+             class="product-img "
              alt="{{ i.name }}"
              loading="lazy"
-             height="250"
-             width="250"
-             style="object-fit:cover;"
+             
+             style="object-fit:fill;"
              {% if i.stock_status != 'outofstock' %}
              onmouseover="this.src='{{ i.image2.url }}'"
              onmouseout="this.src='{{ i.image1.url }}'"
@@ -1839,12 +2185,11 @@
     <div class="product-img-container {% if trend.stock_status == 'outofstock' %}blur-image{% endif %}">
         {% if trend.image1 and trend.image2 %}
         <img src="{{ trend.image1.url }}"
-             class="product-img img-fluid"
+             class="product-img "
              alt="{{ trend.name }}"
              loading="lazy"
-             height="250"
-             width="250"
-             style="object-fit:cover;"
+            
+             style="object-fit:fill;"
              {% if trend.stock_status != 'outofstock' %}
              onmouseover="this.src='{{ trend.image2.url }}'"
              onmouseout="this.src='{{ trend.image1.url }}'"
@@ -2150,7 +2495,7 @@
 
 
 <section class="section-container mobile-scroll1" style="background-color: #FBF0EF;">
-    <div class="container">
+    <div class="container mb-3">
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="circle-row">
